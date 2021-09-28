@@ -1,32 +1,28 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
 int del;
 int n;
-int ans;
+int ans1, ans2;
 string str;
-vector <int> v;
+
 int main()
 {
 	cin >> n;
 	while (n--)
 	{
         del = 0;
-        ans = 0;
+        ans1 = 0;
 		cin >> str;
 		int en = str.size() - 1;
-        int st1;
-        int en1 = str.size() - 1;
 		for (int st = 0; st < en; st++)
 		{
-            st1 = st;
 			if (str[st] != str[en])
 			{
 				if (del == 1)
 				{
-					ans = 2;
+					ans1 = 2;
 					break;
 				}
 				if (st + 1 != en && str[en] == str[st + 1])
@@ -34,40 +30,44 @@ int main()
 					st++;
 					del = 1;
 				}
-				else if (st != en - 1 && str[st] == str[en - 1])
-				{
-					en--;
-                    del = 1;
-				}
 				else
 				{
-					ans = 2;
-					break;
-				}
-
-                if (st1 != en - 1 && str[st1] == str[en1 - 1])
-				{
-					en1--;
-                    del = 1;
-				}
-				else if (st1 + 1 != en1 && str[en1] == str[st1 + 1])
-				{
-					st1++;
-					del = 1;
-				}
-				else
-				{
-					ans = 2;
+					ans1 = 2;
 					break;
 				}
 			}
 			en--;
-            en1--;
 		}
-		if (del == 1 && ans != 2)
-			ans = 1;
-        v.push_back(ans);
+		if (del == 1 && ans1 != 2)
+			ans1 = 1;
+
+		del = 0;
+		ans2 = 0;
+		en = str.size() - 1;
+		for (int st = 0; st < en; st++)
+		{
+			if (str[st] != str[en])
+			{
+				if (del == 1)
+				{
+					ans2 = 2;
+					break;
+				}
+				if (st != en - 1 && str[st] == str[en - 1])
+				{
+					en--;
+					del = 1;
+				}
+				else
+				{
+					ans2 = 2;
+					break;
+				}
+			}
+			en--;
+		}
+		if (del == 1 && ans2 != 2)
+			ans2 = 1;
+		cout << min(ans1, ans2) << '\n';
 	}
-    for(int i = 0; i < v.size(); i++)
-        cout << v[i] << '\n';
 }
